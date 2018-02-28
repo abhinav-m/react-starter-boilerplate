@@ -1,5 +1,5 @@
 # Bundled js
-bundle.js
+dist/bundle.js
 # Dependency directories
 node_modules/
 
