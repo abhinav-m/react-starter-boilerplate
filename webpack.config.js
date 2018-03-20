@@ -1,8 +1,10 @@
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+
 module.exports = {
-  entry: ["./src/index.js"],
+  entry: ['./src/index.js'],
   output: {
-    path: __dirname,
-    filename: "bundle.js"
+    path: __dirname + '/dist',
+    filename: 'bundle.min.js'
   },
   module: {
     rules: [
@@ -10,9 +12,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["react", "es2015", "stage-1"]
+            presets: ['react', 'es2015', 'stage-1']
           }
         }
       },
@@ -20,23 +22,38 @@ module.exports = {
         test: /(\.scss|\.css)$/,
         use: [
           {
-            loader: "style-loader" // creates style nodes from JS strings
+            loader: 'style-loader' // creates style nodes from JS strings
           },
           {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: 'css-loader' // translates CSS into CommonJS
           },
           {
-            loader: "sass-loader" // compiles Sass to CSS
+            loader: 'sass-loader' // compiles Sass to CSS
+          }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: { minimize: true }
           }
         ]
       }
     ]
   },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: './src/templates/index.html',
+      filename: './index.html'
+    })
+  ],
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: ['.js', '.jsx']
   },
   devServer: {
     historyApiFallback: true,
-    contentBase: "./"
+    contentBase: './dist/'
   }
 };
